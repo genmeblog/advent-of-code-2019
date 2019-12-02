@@ -60,8 +60,7 @@
 (def target 19690720)
 (def target- (- target offset))
 
-(def noun (int (/ target- difference)))
+(def noun (quot target- difference))
 (def verb (mod target- difference))
 
 (def part-2 (+ verb (* 100 noun)))
-
