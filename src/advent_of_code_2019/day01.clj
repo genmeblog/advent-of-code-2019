@@ -1,30 +1,24 @@
 (ns advent-of-code-2019.day01
-  (:require [clojure.java.io :as io]
-            [fastmath.core :as m]))
+  (:require [clojure.java.io :as io]))
 
 (set! *unchecked-math* :warn-on-boxed)
 (set! *warn-on-reflection* true)
 
-(defn required-fuel
-  ^long [^long in]
-  (long (- (m/floor (/ in 3.0)) 2.0)))
+;; required fuel formula
+(defn required-fuel ^long [^long in] (- (int (/ in 3)) 2))
 
+;; load data and calculate required fuel
 (def fuel-data (map (comp required-fuel read-string)
                     (-> (io/resource "day01.txt")
                         (io/reader)
                         (line-seq))))
 
+;; sum of required fuel
+(def part-1 (reduce + fuel-data))
+
+;; total fuel, recurence version
 (defn required-fuel-total
   ^long [^long in]
-  (if (pos? in)
-    (+ in (required-fuel-total (required-fuel in)))
-    0))
+  (if-not (pos? in) 0 (+ in (required-fuel-total (required-fuel in)))))
 
-{:fuel (reduce + fuel-data)
- :total-fuel (reduce + (map required-fuel-total fuel-data))}
-;; => {:fuel 3497998, :total-fuel 5244112}
-
-;; tests
-(required-fuel-total (required-fuel 14));; => 2
-(required-fuel-total (required-fuel 1969));; => 966
-(required-fuel-total (required-fuel 100756));; => 50346
+(def part-2 (reduce + (map required-fuel-total fuel-data)))
