@@ -22,11 +22,11 @@
   (is (= target (executor-0 noun verb))))
 
 (deftest brute-force
-  (is (= [target 41 12] (first (for [a (range 100)
-                                     b (range 100)
-                                     :let [res (executor-0 a b)]
-                                     :when (= res target)]
-                                 [(executor-0 a b) a b])))))
+  (is (= [41 12] (first (for [a (range 100)
+                              b (range 100)
+                              :let [res (executor-0 a b)]
+                              :when (= res target)]
+                          [a b])))))
 
 (deftest results
   (is (= 6327510 part-1))
