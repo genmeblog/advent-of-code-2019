@@ -30,14 +30,14 @@
                                    [1 "U7,R6,D4,L4"]]))
 
 (deftest minimum-distance-test
-  (is (= 159 (minimum-distance (crosses wires-1))))
-  (is (= 135 (minimum-distance (crosses wires-2))))
-  (is (= 6 (minimum-distance (crosses wires-3)))))
+  (is (= 159 (minimum-distance (intersections wires-1))))
+  (is (= 135 (minimum-distance (intersections wires-2))))
+  (is (= 6 (minimum-distance (intersections wires-3)))))
 
 (deftest minimum-lengths-test
-  (is (= 610 (minimum-lengths (crosses wires-1) (group-by last wires-1))))
-  (is (= 410 (minimum-lengths (crosses wires-2) (group-by last wires-2))))
-  (is (= 30 (minimum-lengths (crosses wires-3) (group-by last wires-3)))))
+  (is (= 610 (minimum-lengths (intersections wires-1) (group-by last wires-1))))
+  (is (= 410 (minimum-lengths (intersections wires-2) (group-by last wires-2))))
+  (is (= 30 (minimum-lengths (intersections wires-3) (group-by last wires-3)))))
 
 (deftest results
   (is (= 1519 part-1))

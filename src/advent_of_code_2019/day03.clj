@@ -50,7 +50,7 @@
                    (map-indexed vector)
                    (mapcat process-wire)))
 
-(defn crosses
+(defn intersections
   [segments]
   (for [s1 segments
         s2 segments
@@ -58,34 +58,34 @@
         :when (and d (pos? d))]
     cr))
 
-(def segment-crosses (crosses segments))
+(def wires-intersections (intersections segments))
 
 (defn minimum-distance
-  [segment-crosses]
-  (->> segment-crosses
+  [wires-intersections]
+  (->> wires-intersections
        (map first)
        (apply min)))
 
-(def part-1 (minimum-distance segment-crosses))
+(def part-1 (minimum-distance wires-intersections))
 
-(defn before-cross? [sid seg] (>= sid (nth seg 5)))
+(defn before-intersection? [sid seg] (>= sid (nth seg 5)))
 
 (defn find-segment-sum
   [gs sid id c1 c2]
-  (let [ss (take-while (partial before-cross? sid) (gs id))
+  (let [ss (take-while (partial before-intersection? sid) (gs id))
         [_ a b _ o] (last ss)
         init (if (= :h o)
                (if (< a b) (- c1 a) (- a c1))
                (if (< a b) (- c2 a) (- a c2)))] ;; find subsegment length from endpoint to intersection
     (reduce + init (map first (butlast ss))))) ;; sum the rest
 
-(defn process-cross
+(defn process-intersection
   [gs [_ c1 c2 sid1 sid2]]
   (+ (find-segment-sum gs sid1 0 c1 c2)
      (find-segment-sum gs sid2 1 c1 c2)))
 
 (defn minimum-lengths
-  [segment-crosses grouped-segments]
-  (apply min (map (partial process-cross grouped-segments) segment-crosses)))
+  [wires-intersections grouped-segments]
+  (apply min (map (partial process-intersection grouped-segments) wires-intersections)))
 
-(def part-2 (minimum-lengths segment-crosses (group-by last segments)))
+(def part-2 (minimum-lengths wires-intersections (group-by last segments)))
