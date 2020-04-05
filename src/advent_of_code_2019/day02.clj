@@ -37,7 +37,7 @@
 
 (def part-1 (executor-0 12 2))
 
-(set! *unchecked-math* :true)
+(set! *unchecked-math* true)
 
 ;; OBSERVED
 ;;
