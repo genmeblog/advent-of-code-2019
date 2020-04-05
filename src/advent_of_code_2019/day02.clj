@@ -48,7 +48,7 @@
     (->> (range 100)
          (map #(executor-0 % r-verb))
          (partition 2 1)
-         (map #(apply - %))
+         (map (partial apply -))
          (distinct)
          (first)
          (-))))
